@@ -1,20 +1,51 @@
 package springbook.user.dao;
 
-import java.util.List;
-
 import springbook.user.domain.User;
 
-public interface UserDao {
+import java.sql.*;
 
-	void add(User user);
+public abstract class UserDao {
 
-	User get(String id);
+    public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
+    /*
+    {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3307/springbook", "spring", "book");
 
-	List<User> getAll();
+        return c;
+    }
 
-	void deleteAll();
+     */
+    public void add(User user) throws ClassNotFoundException, SQLException {
+        Connection c = getConnection();
+        PreparedStatement ps = c.prepareStatement("insert into users values(?,?,?)");
+        ps.setString(1, user.getId());
+        ps.setString(2, user.getName());
+        ps.setString(3, user.getPassword());
 
-	int getCount();
+        ps.executeUpdate();
 
-	void update(User user);
+        ps.close();
+        c.close();
+    }
+
+    public User get(String id) throws ClassNotFoundException, SQLException {
+        Connection c = getConnection();
+
+        PreparedStatement ps = c.prepareStatement("select * from users where id = ?");
+        ps.setString(1, id);
+
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        User user = new User();
+        user.setId(rs.getString("id"));
+        user.setName(rs.getString("name"));
+        user.setPassword(rs.getString("password"));
+
+        rs.close();
+        ps.close();
+        c.close();
+
+        return  user;
+    }
 }

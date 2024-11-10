@@ -1,28 +1,31 @@
 package springbook.user.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class User {
-    private String id;
-    private String name;
-    private String password;
-    String email;
-    private Level level;
-    private int login;
-    private int recommend;
+    String id;
+    String name;
+    String password;
 
-    public void upgradeLevel() {
-        Level nextLevel = this.level.nextLevel();
-        if (nextLevel == null) {
-            throw new IllegalStateException(this.level + "은  업그레이드가 불가능합니다");
-        }
-        else {
-            this.level = nextLevel;
-        }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
