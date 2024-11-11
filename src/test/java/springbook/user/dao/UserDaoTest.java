@@ -10,7 +10,7 @@ public class UserDaoTest {
 
     @Test
     public void addAndGet() throws ClassNotFoundException, SQLException {
-        UserDao userDao = new NuserDao();
+        UserDao userDao = new DaoFactory().userDao();
         User user = new User();
         user.setName("test");
         user.setId("test");
