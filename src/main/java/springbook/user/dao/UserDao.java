@@ -8,7 +8,7 @@ public class UserDao {
 
     private ConnectionMaker connectionMaker;
 
-    public UserDao(ConnectionMaker connectionMaker) {
+    public void setConnectionMaker(ConnectionMaker connectionMaker) {
         this.connectionMaker = connectionMaker;
     }
 
@@ -27,7 +27,6 @@ public class UserDao {
 
     public User get(String id) throws ClassNotFoundException, SQLException {
         Connection c = connectionMaker.makeConnection();
-
         PreparedStatement ps = c.prepareStatement("select * from users where id = ?");
         ps.setString(1, id);
 

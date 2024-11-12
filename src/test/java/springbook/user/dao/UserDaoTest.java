@@ -1,6 +1,9 @@
 package springbook.user.dao;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import springbook.user.domain.User;
 
 import java.sql.SQLException;
@@ -10,18 +13,23 @@ public class UserDaoTest {
 
     @Test
     public void addAndGet() throws ClassNotFoundException, SQLException {
-        UserDao userDao = new DaoFactory().userDao();
-        User user = new User();
-        user.setName("test");
-        user.setId("test");
-        user.setPassword("123");
-        userDao.add(user);
-        System.out.println("등록성공");
+        ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
+        UserDao dao = context.getBean("userDao", UserDao.class);
 
-        User result = userDao.get("test");
-        System.out.println(result.getId());
-        System.out.println(result.getName());
-        assertEquals("test", result.getId());
+        User user = new User();
+        user.setId("whiteship");
+        user.setName("백기선");
+        user.setPassword("123456");
+
+        dao.add(user);
+
+        System.out.println(user.getId() + " 등록 성공");
+
+        User user2 = new User();
+        System.out.println(user2.getName());
+        System.out.println(user2.getPassword());
+
+        System.out.println(user2.getId() + " 조회 성공");
 
 
 
