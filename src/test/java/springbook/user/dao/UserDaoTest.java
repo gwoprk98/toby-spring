@@ -1,37 +1,42 @@
 package springbook.user.dao;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import springbook.user.dao.config.DaoConfig;
 import springbook.user.domain.User;
 
-import java.sql.SQLException;
+class UserDaoTest {
 
-import static org.junit.jupiter.api.Assertions.*;
-public class UserDaoTest {
+    private static UserDao userDao;
 
+    @BeforeAll
+    static void init() {
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(DaoConfig.class);
+        userDao = applicationContext.getBean(UserDao.class);
+    }
+
+    @BeforeEach
+    void delete() {
+        userDao.deleteAll();
+    }
+
+    @DisplayName(value = "사용자 조회하기")
     @Test
-    public void addAndGet() throws ClassNotFoundException, SQLException {
-        ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
-        UserDao dao = context.getBean("userDao", UserDao.class);
+    void findById() {
+        // given
+        User user = new User("id", "name", "1234");
+        userDao.add(user);
 
-        User user = new User();
-        user.setId("whiteship");
-        user.setName("백기선");
-        user.setPassword("123456");
+        // when
+        User actual = userDao.findById(user.getId());
 
-        dao.add(user);
-
-        System.out.println(user.getId() + " 등록 성공");
-
-        User user2 = new User();
-        System.out.println(user2.getName());
-        System.out.println(user2.getPassword());
-
-        System.out.println(user2.getId() + " 조회 성공");
-
-
-
+        // then
+        assertThat(actual).isEqualTo(user);
     }
 }

@@ -4,12 +4,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class SimpleConnectionMaker {
-       public Connection makeNewConnection() throws ClassNotFoundException, SQLException {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3307/springbook", "spring", "book");
+public class SimpleConnectionMaker implements ConnectionMaker {
 
-            return c;
+    public Connection getConnection() {
+        try {
+            return DriverManager.getConnection("jdbc:mysql://localhost:3307/springbook", "spring", "book");
+        } catch (SQLException e) {
+            System.out.println("DB 연동 실패");
+            throw new RuntimeException(e);
+        }
     }
 }
 
