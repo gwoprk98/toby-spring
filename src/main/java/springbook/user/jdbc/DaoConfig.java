@@ -1,12 +1,11 @@
-package springbook.user.dao.config;
+package springbook.user.jdbc;
 import com.mysql.cj.jdbc.Driver;
 import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
-import springbook.user.dao.UserDao;
 
-    @Configuration
+@Configuration
     public class DaoConfig {
 
         @Bean
