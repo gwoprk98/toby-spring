@@ -4,62 +4,37 @@ import springbook.user.domain.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.sql.DataSource;
+import springbook.user.domain.User;
 
 public class UserDao {
 
-    private final DataSource dataSource;
+    private final JdbcContext jdbcContext;
 
-    public UserDao(final DataSource dataSource) {
-        this.dataSource = dataSource;
+    public UserDao(final JdbcContext jdbcContext) {
+        this.jdbcContext = jdbcContext;
     }
 
     public void add(User user) {
-        String sql = "insert into users(id, name, password) values(?,?,?)";
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
-            preparedStatement.setString(1, user.getId());
-            preparedStatement.setString(2, user.getName());
-            preparedStatement.setString(3, user.getPassword());
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        jdbcContext.executeSql("insert into users(id, name, password) values(?,?,?)",
+                user.getId(), user.getName(), user.getPassword());
     }
 
     public User findById(String id) {
-        String sql = "select id, name, password from users where id = ?";
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
-            preparedStatement.setString(1, id);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return new User(
-                        resultSet.getString("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("password")
-                );
+        StatementStrategy statementStrategy = new StatementStrategy() {
+            @Override
+            public PreparedStatement makePreparedStatement(final Connection connection) throws SQLException {
+                String sql = "select id, name, password from users where id = ?";
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, id);
+                return preparedStatement;
             }
-            return null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        };
+
+        return jdbcContext.executeSelect(statementStrategy);
     }
 
     public void deleteAll() {
-        String sql = "delete from users";
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        jdbcContext.executeSql("delete from users");
     }
 }
