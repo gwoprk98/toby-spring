@@ -1,5 +1,5 @@
 package springbook.user.calculator;
 
-public interface LineCallback {
-    int executeWithLine(String line, int value);
+public interface LineCallback<T> {
+    T executeWithLine(String T, int value);
 }
