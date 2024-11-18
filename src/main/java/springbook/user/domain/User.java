@@ -1,31 +1,36 @@
 package springbook.user.domain;
 
+import java.util.Objects;
+import lombok.Getter;
+
+@Getter
 public class User {
-    String id;
-    String name;
-    String password;
 
-    public String getName() {
-        return name;
-    }
+    private final String id;
+    private final String name;
+    private final String password;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
+    public User(final String id, final String name, final String password) {
         this.id = id;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
+        this.name = name;
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return Objects.equals(id, user.id) && Objects.equals(name, user.name)
+                && Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, password);
     }
 }
