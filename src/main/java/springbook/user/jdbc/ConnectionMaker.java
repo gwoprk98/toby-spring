@@ -1,4 +1,4 @@
-package springbook.user.dao;
+package springbook.user.jdbc;
 
 import java.sql.Connection;
 
