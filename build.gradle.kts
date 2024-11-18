@@ -13,19 +13,21 @@ repositories {
 }
 
 dependencies {
-    implementation("org.projectlombok:lombok:1.18.24")
-    implementation("mysql:mysql-connector-java:8.0.30")
-    implementation("org.springframework:spring-context:5.3.22")
-    implementation("org.springframework:spring-context-support:5.3.22")
-    implementation("org.springframework:spring-jdbc:5.3.22")
-    implementation("javax.mail:mail:1.4.7")
-    implementation("javax.activation:activation:1.1.1")
+    implementation ("org.springframework:spring-context:5.3.22")
+    implementation ("org.springframework:spring-jdbc:5.3.22")
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
-    testImplementation("org.assertj:assertj-core:3.23.1")
-    testImplementation("org.springframework:spring-test:5.3.22")
+    implementation ("mysql:mysql-connector-java:8.0.30")
 
-    annotationProcessor("org.projectlombok:lombok:1.18.24")
+    implementation ("org.projectlombok:lombok:1.18.24")
+    annotationProcessor ("org.projectlombok:lombok:1.18.24")
+
+    implementation ("org.slf4j:slf4j-api:1.7.30")
+    implementation ("org.slf4j:slf4j-simple:1.7.30")
+
+    testImplementation ("org.springframework:spring-test:5.3.22")
+    testImplementation ("org.assertj:assertj-core:3.22.0")
+    testImplementation ("org.junit.jupiter:junit-jupiter-api:5.8.1")
+    testRuntimeOnly ("org.junit.jupiter:junit-jupiter-engine:5.8.1")
 }
 
 tasks.getByName<Test>("test") {
