@@ -10,6 +10,6 @@
 		<property name="password" value="book" />
 	</bean>
 
-	<bean id="userDao" class="springbook.user.jdbc.UserDao">
+	<bean id="userDao" class="springbook.jdbc.UserDao">
 	</bean>
 </beans>

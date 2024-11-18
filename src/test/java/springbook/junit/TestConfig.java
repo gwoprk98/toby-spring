@@ -1,4 +1,4 @@
-package springbook.user.junit;
+package springbook.junit;
 
 import org.springframework.context.annotation.Configuration;
 

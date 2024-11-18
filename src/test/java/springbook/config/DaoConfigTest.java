@@ -1,4 +1,4 @@
-package springbook.user.config;
+package springbook.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import springbook.user.jdbc.DaoConfig;
-import springbook.user.jdbc.UserDao;
+import springbook.jdbc.DaoConfig;
+import springbook.jdbc.UserDao;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = DaoConfig.class)

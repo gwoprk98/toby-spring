@@ -1,4 +1,4 @@
-package springbook.user.junit;
+package springbook.junit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

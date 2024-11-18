@@ -1,4 +1,4 @@
-package springbook.user.jdbctemplate;
+package springbook.jdbctemplate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import springbook.user.domain.User;
+import springbook.domain.User;
 
 import java.util.List;
 
