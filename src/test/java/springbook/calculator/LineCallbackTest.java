@@ -1,4 +1,4 @@
-package springbook.user.calculator;
+package springbook.calculator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

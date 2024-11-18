@@ -1,4 +1,4 @@
-package springbook.user.calculator;
+package springbook.calculator;
 
 
 import org.junit.jupiter.api.BeforeAll;

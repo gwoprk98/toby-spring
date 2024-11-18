@@ -1,11 +1,10 @@
-package springbook.user.jdbc;
+package springbook.jdbc;
 
-import springbook.user.domain.User;
+import springbook.domain.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import springbook.user.domain.User;
 
 public class UserDao {
 

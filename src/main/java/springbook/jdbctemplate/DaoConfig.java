@@ -1,23 +1,18 @@
-package springbook.user.jdbc;
-
+package springbook.jdbctemplate;
 
 import com.mysql.cj.jdbc.Driver;
-import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
+import javax.sql.DataSource;
 
 @Configuration
 public class DaoConfig {
 
     @Bean
     public UserDao userDao() {
-        return new UserDao(jdbcContext());
-    }
-
-    private JdbcContext jdbcContext() {
-        return new JdbcContext(dataSource());
+        return new UserDao(dataSource());
     }
 
     private DataSource dataSource() {

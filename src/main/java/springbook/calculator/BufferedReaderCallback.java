@@ -1,4 +1,4 @@
-package springbook.user.calculator;
+package springbook.calculator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
