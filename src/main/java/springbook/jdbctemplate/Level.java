@@ -24,7 +24,7 @@ public enum Level {
 
     public Level nextLevel() {
         if (this == Level.GOLD) {
-            return this;
+            throw new IllegalStateException("더 이상 업그레이드 할 수 없는 레벨입니다");
         }
 
         return of(value + 1);
