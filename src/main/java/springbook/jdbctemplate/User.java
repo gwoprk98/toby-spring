@@ -19,7 +19,7 @@ public class User {
         this.level = level;
     }
 
-    public void updateLevel() {
+    public void upgradeLevel() {
         level = level.nextLevel();
     }
 

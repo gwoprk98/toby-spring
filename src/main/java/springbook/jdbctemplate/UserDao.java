@@ -4,7 +4,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import javax.sql.DataSource;
-import java.util.List;
 
 
 public class UserDao {
@@ -36,23 +35,7 @@ public class UserDao {
         jdbcTemplate.update("delete from users");
     }
 
-    public int count() {
-        return jdbcTemplate.queryForObject("select count(*) from users", Integer.class);
-    }
-
-    public List<User> findAll() {
-        String sql = "select id, name, password, level from users order by id";
-        RowMapper<User> rowMapper = (rs, rowNum) -> new User(
-                rs.getString("id"),
-                rs.getString("name"),
-                rs.getString("password"),
-                Level.of(rs.getInt("level"))
-        );
-
-        return jdbcTemplate.query(sql, rowMapper);
-    }
-
-    public void Update(final User user) {
+    public void update(final User user) {
         String sql = "update users set name = ?, password = ?, level = ? where id = ?";
         jdbcTemplate.update(sql, user.getName(), user.getPassword(), user.getLevel().getValue(), user.getId());
     }
