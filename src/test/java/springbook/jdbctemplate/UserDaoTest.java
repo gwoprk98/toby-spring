@@ -28,16 +28,16 @@ class UserDaoTest {
         // 데이터베이스 초기화 및 사용자 객체 생성
         userDao.deleteAll();
 
-        this.user1 = new User("id1", "name1", "1234");
-        this.user2 = new User("id2", "name2", "1234");
-        this.user3 = new User("id3", "name3", "1234");
+        this.user1 = new User("id1", "name1", "1234", Level.BASIC);
+        this.user2 = new User("id2", "name2", "1234", Level.SILVER);
+        this.user3 = new User("id3", "name3", "1234", Level.GOLD);
     }
 
     @DisplayName(value = "사용자 조회하기")
     @Test
     void findById() {
         // given
-        User user = new User("id", "name", "1234");
+        User user = new User("id", "name", "1234", Level.SILVER);
         userDao.add(user);
 
         // when
