@@ -15,12 +15,12 @@ public class UserDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void add(User user) {
+    public void add(final User user) {
         String sql = "insert into users(id, name, password, level) values(?,?,?,?)";
         jdbcTemplate.update(sql, user.getId(), user.getName(), user.getPassword(), user.getLevel().getValue());
     }
 
-    public User findById(String id) {
+    public User findById(final String id) {
         String sql = "select id, name, password, level from users where id = ?";
         RowMapper<User> rowMapper = (rs, rowNum) -> new User(
                 rs.getString("id"),
@@ -50,6 +50,11 @@ public class UserDao {
         );
 
         return jdbcTemplate.query(sql, rowMapper);
+    }
+
+    public void Update(final User user) {
+        String sql = "update users set name = ?, password = ?, level = ? where id = ?";
+        jdbcTemplate.update(sql, user.getName(), user.getPassword(), user.getLevel().getValue(), user.getId());
     }
 
 }
