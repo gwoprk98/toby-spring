@@ -2,7 +2,6 @@ package springbook.jdbctemplate;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import springbook.domain.User;
 
 import javax.sql.DataSource;
 import java.util.List;
