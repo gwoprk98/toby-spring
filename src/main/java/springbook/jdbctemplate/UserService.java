@@ -1,40 +1,32 @@
 package springbook.jdbctemplate;
 
-import org.springframework.jdbc.datasource.DataSourceUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
-
-import javax.sql.DataSource;
-import java.sql.Connection;
 import java.util.List;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.jta.JtaTransactionManager;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 @Service
 public class UserService {
 
     private final UserDao userDao;
-    private final DataSource dataSource;
 
-    public UserService(final DataSource dataSource) {
-        this.dataSource = dataSource;
-        this.userDao = new UserDao(dataSource);
+    public UserService(final UserDao userDao) {
+        this.userDao = userDao;
     }
 
-    public void upgradeLevels(final List<User> users) throws Exception {
-        TransactionSynchronizationManager.initSynchronization();            // 동기화 작업 초기화
-        Connection connection = DataSourceUtils.getConnection(dataSource);  // DB 커넥션 생성 & 동기화 (트랜잭션 시작)
+    public void upgradeLevels(final List<User> users) {
+        PlatformTransactionManager transactionManager = new JtaTransactionManager();
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
 
         try {
-            connection.setAutoCommit(false);
             for (User user : users) {
                 upgradeLevel(user);
             }
-            connection.commit();
+            transactionManager.commit(status);
         } catch (IllegalStateException e) {
-            connection.rollback();
-        } finally {
-            DataSourceUtils.releaseConnection(connection, dataSource);      // Connection 안전하게 close
-            TransactionSynchronizationManager.unbindResource(dataSource);
-            TransactionSynchronizationManager.clearSynchronization();
+            transactionManager.rollback(status);
         }
     }
 
