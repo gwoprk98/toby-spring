@@ -1,7 +1,8 @@
-package springbook.domain;
+package springbook.jdbc;
+
+import lombok.Getter;
 
 import java.util.Objects;
-import lombok.Getter;
 
 @Getter
 public class User {
@@ -27,10 +28,5 @@ public class User {
         User user = (User) o;
         return Objects.equals(id, user.id) && Objects.equals(name, user.name)
                 && Objects.equals(password, user.password);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, password);
     }
 }

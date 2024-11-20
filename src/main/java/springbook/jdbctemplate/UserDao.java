@@ -2,12 +2,11 @@ package springbook.jdbctemplate;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import springbook.domain.User;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.util.List;
 
-
+@Repository
 public class UserDao {
 
     private final JdbcTemplate jdbcTemplate;
@@ -16,17 +15,18 @@ public class UserDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void add(User user) {
-        String sql = "insert into users(id, name, password) values(?,?,?)";
-        jdbcTemplate.update(sql, user.getId(), user.getName(), user.getPassword());
+    public void save(final User user) {
+        String sql = "insert into users(id, name, password, level) values(?,?,?,?)";
+        jdbcTemplate.update(sql, user.getId(), user.getName(), user.getPassword(), user.getLevel().getValue());
     }
 
-    public User findById(String id) {
-        String sql = "select id, name, password from users where id = ?";
+    public User findById(final String id) {
+        String sql = "select id, name, password, level from users where id = ?";
         RowMapper<User> rowMapper = (rs, rowNum) -> new User(
                 rs.getString("id"),
                 rs.getString("name"),
-                rs.getString("password")
+                rs.getString("password"),
+                Level.of(rs.getInt("level"))
         );
 
         return jdbcTemplate.queryForObject(sql, rowMapper, id);
@@ -36,19 +36,9 @@ public class UserDao {
         jdbcTemplate.update("delete from users");
     }
 
-    public int count() {
-        return jdbcTemplate.queryForObject("select count(*) from users", Integer.class);
-    }
-
-    public List<User> findAll() {
-        String sql = "select id, name, password from users order by id";
-        RowMapper<User> rowMapper = (rs, rowNum) -> new User(
-                rs.getString("id"),
-                rs.getString("name"),
-                rs.getString("password")
-        );
-
-        return jdbcTemplate.query(sql, rowMapper);
+    public void update(final User user) {
+        String sql = "update users set name = ?, password = ?, level = ? where id = ?";
+        jdbcTemplate.update(sql, user.getName(), user.getPassword(), user.getLevel().getValue(), user.getId());
     }
 
 }
