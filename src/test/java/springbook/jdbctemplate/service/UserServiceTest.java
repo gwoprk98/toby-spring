@@ -1,4 +1,4 @@
-package springbook.jdbctemplate;
+package springbook.jdbctemplate.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -11,14 +11,18 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import springbook.jdbctemplate.DataSourceConfig;
+import springbook.jdbctemplate.Level;
+import springbook.jdbctemplate.User;
+import springbook.jdbctemplate.UserDao;
 
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {DataSourceConfig.class, UserDao.class, UserService.class})
+@ContextConfiguration(classes = {DataSourceConfig.class, UserDao.class, UserServiceImpl.class, TxUserService.class})
 class UserServiceTest {
 
     @Autowired
-    private UserService userService;
+    private TxUserService userService;
 
     @Autowired
     private UserDao userDao;
@@ -29,12 +33,13 @@ class UserServiceTest {
     }
 
     @DisplayName(value = "여러명의 사용자 레벨 정상 업그레이드")
-    void upgradeLevels_succeed() throws Exception {
+    void upgradeLevels_succeed() {
         // given
         User user1 = new User("id1", "name", "password", Level.BASIC);
         User user2 = new User("id2", "name", "password", Level.BASIC);
         User user3 = new User("id3", "name", "password", Level.SILVER);
         List<User> users = List.of(user1, user2, user3);
+        saveAll(users);
 
         // when
         userService.upgradeLevels(users);
@@ -50,12 +55,13 @@ class UserServiceTest {
     }
 
     @DisplayName(value = "하나라도 레벨 정상 업그레이드 되지 않으면 전부 롤백")
-    void upgradeLevels_failed() throws Exception {
+    void upgradeLevels_failed() {
         // given
         User user1 = new User("id1", "name", "password", Level.BASIC);
         User user2 = new User("id2", "name", "password", Level.BASIC);
         User user3 = new User("id3", "name", "password", Level.GOLD);
         List<User> users = List.of(user1, user2, user3);
+        saveAll(users);
 
         // when
         userService.upgradeLevels(users);
@@ -97,5 +103,11 @@ class UserServiceTest {
         // when & then
         assertThatThrownBy(() -> userService.upgradeLevel(user))
                 .isInstanceOf(IllegalStateException.class);
+    }
+
+    private void saveAll(final List<User> users) {
+        for (User user : users) {
+            userDao.save(user);
+        }
     }
 }

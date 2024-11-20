@@ -1,4 +1,4 @@
-package springbook.jdbctemplate;
+package springbook.jdbctemplate.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import springbook.jdbc.DaoConfig;
+import springbook.jdbctemplate.Level;
+import springbook.jdbctemplate.User;
+import springbook.jdbctemplate.UserDao;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {DaoConfig.class, UserDao.class})
