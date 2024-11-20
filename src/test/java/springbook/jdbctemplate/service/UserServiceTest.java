@@ -12,20 +12,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import springbook.jdbctemplate.DataSourceConfig;
-import springbook.jdbctemplate.Level;
-import springbook.jdbctemplate.User;
-import springbook.jdbctemplate.UserDao;
+import springbook.jdbctemplate.dao.UserDao;
+import springbook.jdbctemplate.dao.UserDaoImpl;
+import springbook.jdbctemplate.domain.Level;
+import springbook.jdbctemplate.domain.User;
 
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {DataSourceConfig.class, UserDao.class, UserServiceImpl.class, TxUserService.class})
+@ContextConfiguration(classes = {DataSourceConfig.class, UserDaoImpl.class, UserServiceImpl.class, TxUserService.class})
 class UserServiceTest {
 
     @Autowired
     private TxUserService userService;
 
     @Autowired
-    private UserDao userDao;
+    private UserDaoImpl userDao;
 
     @BeforeEach
     void delete() {

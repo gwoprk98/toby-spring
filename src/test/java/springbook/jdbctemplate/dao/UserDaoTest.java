@@ -8,15 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import springbook.jdbc.DaoConfig;
-import springbook.jdbctemplate.Level;
-import springbook.jdbctemplate.User;
-import springbook.jdbctemplate.UserDao;
+import springbook.jdbctemplate.DataSourceConfig;
+import springbook.jdbctemplate.domain.Level;
+import springbook.jdbctemplate.domain.User;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {DaoConfig.class, UserDao.class})
+@ContextConfiguration(classes = {DataSourceConfig.class, UserDaoImpl.class})
 class UserDaoTest {
     @Autowired
-    private UserDao userDao;
+    private UserDaoImpl userDao;
     @BeforeEach
     void delete() {
         userDao.deleteAll();

@@ -1,6 +1,6 @@
 package springbook.jdbctemplate.service;
 
-import springbook.jdbctemplate.User;
+import springbook.jdbctemplate.domain.User;
 
 import java.util.List;
 

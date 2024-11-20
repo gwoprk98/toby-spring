@@ -7,7 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import springbook.jdbctemplate.Level;
 
 class LevelTest {
     @ParameterizedTest(name = "{0}의 Level은 {1}")
