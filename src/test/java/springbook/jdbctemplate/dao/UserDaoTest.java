@@ -25,7 +25,7 @@ class UserDaoTest {
     @Test
     void findById() {
         // given
-        User user = new User("id", "name", "1234", Level.SILVER);
+        User user = new User("id", "name", "1234", Level.BASIC);
         userDao.save(user);
         // when
         User actual = userDao.findById(user.getId());

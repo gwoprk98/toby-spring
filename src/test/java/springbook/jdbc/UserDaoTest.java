@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import springbook.jdbctemplate.domain.Level;
 
 class UserDaoTest {
 
@@ -28,7 +29,7 @@ class UserDaoTest {
     @Test
     void findById() {
         // given
-        User user = new User("id", "name", "1234");
+        User user = new User("id", "name", "1234", Level.BASIC);
         userDao.add(user);
 
         // when
