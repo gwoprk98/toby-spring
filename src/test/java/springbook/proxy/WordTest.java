@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.aop.framework.ProxyFactoryBean;
 
 import java.lang.reflect.Proxy;
 
@@ -33,6 +34,23 @@ public class WordTest {
 
         // when & then
         assertThat(proxy.sayHello()).isEqualTo("HELLO GWOOPRK!");
+        assertThat(proxy.sayThanks()).isEqualTo("THANK YOU GWOOPRK!");
+    }
+
+    @DisplayName(value = "ProxyFactoryBean를 이용해 다이나믹 프록시 생성")
+    @Test
+    void proxyFactoryBean() {
+        // given
+        ProxyFactoryBean proxyFactoryBean = new ProxyFactoryBean();
+        proxyFactoryBean.setTarget(new WooWord());
+        proxyFactoryBean.addAdvice(new UppercaseAdvice());
+
+        Word proxy = (Word) proxyFactoryBean.getObject();
+
+        // when & then
+
+        assertThat(proxy.sayHello()).isEqualTo("HELLO GWOOPRK!");
+
         assertThat(proxy.sayThanks()).isEqualTo("THANK YOU GWOOPRK!");
     }
 }
