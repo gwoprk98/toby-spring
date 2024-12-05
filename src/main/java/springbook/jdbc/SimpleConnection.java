@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class SimpleConnectionMaker implements ConnectionMaker {
+public class SimpleConnection implements ConnectionMaker {
 
     public Connection getConnection() {
         try {
@@ -15,5 +15,3 @@ public class SimpleConnectionMaker implements ConnectionMaker {
         }
     }
 }
-
-

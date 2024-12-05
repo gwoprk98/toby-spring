@@ -2,22 +2,21 @@ package springbook.jdbc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import springbook.jdbctemplate.domain.Level;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = DaoConfig.class)
 class UserDaoTest {
 
-    private static UserDao userDao;
-
-    @BeforeAll
-    static void init() {
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(DaoConfig.class);
-        userDao = applicationContext.getBean(UserDao.class);
-    }
+    @Autowired
+    private UserDao userDao;
 
     @BeforeEach
     void delete() {
@@ -28,7 +27,7 @@ class UserDaoTest {
     @Test
     void findById() {
         // given
-        User user = new User("id", "name", "1234");
+        User user = new User("id", "name", "1234", Level.BASIC);
         userDao.add(user);
 
         // when
@@ -37,6 +36,4 @@ class UserDaoTest {
         // then
         assertThat(actual).isEqualTo(user);
     }
-
-
 }

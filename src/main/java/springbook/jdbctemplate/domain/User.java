@@ -1,8 +1,7 @@
-package springbook.jdbctemplate;
-
-import lombok.Getter;
+package springbook.jdbctemplate.domain;
 
 import java.util.Objects;
+import lombok.Getter;
 
 @Getter
 public class User {

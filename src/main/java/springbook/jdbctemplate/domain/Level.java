@@ -1,4 +1,4 @@
-package springbook.jdbctemplate;
+package springbook.jdbctemplate.domain;
 
 import java.util.Arrays;
 
@@ -23,10 +23,9 @@ public enum Level {
     }
 
     public Level nextLevel() {
-        if (this == Level.GOLD) {
-            throw new IllegalStateException("더 이상 업그레이드 할 수 없는 레벨입니다");
+        if (this == GOLD) {
+            throw new IllegalStateException("더 업그레이드할 수 없는 레벨입니다.");
         }
-
         return of(value + 1);
     }
 
