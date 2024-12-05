@@ -6,10 +6,10 @@ import java.io.IOException;
 
 public class Calculator {
 
-    private String filepath;
+    private final String filePath;
 
     public Calculator(final String filePath) {
-        this.filepath = filePath;
+        this.filePath = filePath;
     }
 
     public int sum() {
@@ -20,17 +20,17 @@ public class Calculator {
         return calculate((line, value) -> Math.max(Integer.parseInt(line), value));
     }
 
-    private int  calculate(LineCallback<Integer> lineCallback) {
-        try (FileReader fileReader = new FileReader(filepath);
-            BufferedReader br = new BufferedReader(fileReader)) {
+    private int calculate(LineCallback<Integer> lineCallback) {
+        try (FileReader fileReader = new FileReader(filePath);
+             BufferedReader br = new BufferedReader(fileReader)) {
             int result = 0;
             String line;
 
             while ((line = br.readLine()) != null) {
                 result = lineCallback.executeWithLine(line, result);
             }
-            return result;
 
+            return result;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

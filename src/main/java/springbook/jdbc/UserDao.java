@@ -24,6 +24,7 @@ public class UserDao {
             preparedStatement.setString(1, id);
             return preparedStatement;
         };
+
         return jdbcContext.executeSelect(statementStrategy);
     }
 

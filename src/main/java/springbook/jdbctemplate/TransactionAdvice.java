@@ -1,6 +1,6 @@
 package springbook.jdbctemplate;
 
-
+import javax.sql.DataSource;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.jdbc.support.JdbcTransactionManager;
@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
-
-import javax.sql.DataSource;
 
 @Component
 public class TransactionAdvice implements MethodInterceptor {
@@ -28,6 +26,7 @@ public class TransactionAdvice implements MethodInterceptor {
             Object result = invocation.proceed();
             transactionManager.commit(status);
             return result;
+
         } catch (RuntimeException e) {
             transactionManager.rollback(status);
             throw e;

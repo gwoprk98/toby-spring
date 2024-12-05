@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import springbook.jdbctemplate.DataSourceConfig;
-import springbook.jdbctemplate.dao.UserDao;
-import springbook.jdbctemplate.dao.UserDaoImpl;
 import springbook.jdbctemplate.domain.Level;
 import springbook.jdbctemplate.domain.User;
+import springbook.jdbctemplate.dao.UserDao;
+import springbook.jdbctemplate.dao.UserDaoImpl;
 
 
 @ExtendWith(SpringExtension.class)
@@ -26,7 +26,7 @@ class UserServiceTest {
     private TxUserService userService;
 
     @Autowired
-    private UserDaoImpl userDao;
+    private UserDao userDao;
 
     @BeforeEach
     void delete() {
@@ -34,6 +34,7 @@ class UserServiceTest {
     }
 
     @DisplayName(value = "여러명의 사용자 레벨 정상 업그레이드")
+    @Test
     void upgradeLevels_succeed() {
         // given
         User user1 = new User("id1", "name", "password", Level.BASIC);
@@ -56,6 +57,7 @@ class UserServiceTest {
     }
 
     @DisplayName(value = "하나라도 레벨 정상 업그레이드 되지 않으면 전부 롤백")
+    @Test
     void upgradeLevels_failed() {
         // given
         User user1 = new User("id1", "name", "password", Level.BASIC);
@@ -81,8 +83,8 @@ class UserServiceTest {
     @Test
     void upgrade_success() {
         // given
-        String id = "gwoprk98";
-        User user = new User(id, "박건우", "1234", Level.BASIC);
+        String id = "woodev98";
+        User user = new User(id, "우데브", "1234", Level.BASIC);
         userDao.save(user);
 
         // when
@@ -97,8 +99,8 @@ class UserServiceTest {
     @Test
     void upgrade_failed() {
         // given
-        String id = "gwoprk98";
-        User user = new User(id, "박건우", "1234", Level.GOLD);
+        String id = "gundamdev98";
+        User user = new User(id, "우데브", "1234", Level.GOLD);
         userDao.save(user);
 
         // when & then

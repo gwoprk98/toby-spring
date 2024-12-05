@@ -9,10 +9,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import springbook.jdbctemplate.dao.StubUserDao;
-import springbook.jdbctemplate.dao.UserDao;
 import springbook.jdbctemplate.domain.Level;
 import springbook.jdbctemplate.domain.User;
+import springbook.jdbctemplate.dao.StubUserDao;
+import springbook.jdbctemplate.dao.UserDao;
 
 
 @ExtendWith(SpringExtension.class)
@@ -34,8 +34,8 @@ class UserServiceWithStubDaoTest {
     @Test
     void upgrade_success() {
         // given
-        String id = "gwoprk98";
-        User user = new User(id, "gwoprk", "1234", Level.BASIC);
+        String id = "gundamdev98";
+        User user = new User(id, "건담데브", "1234", Level.BASIC);
         userDao.save(user);
 
         // when

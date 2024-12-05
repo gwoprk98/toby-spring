@@ -1,8 +1,8 @@
-package springbook.proxy;
+package springbook.proxy.domain;
 
-public class WooWord implements Word {
+public class GundamWord implements Word {
 
-    private static final String NAME = "gwooprk";
+    private static final String NAME = "gundamdev";
 
     @Override
     public String sayHello() {
