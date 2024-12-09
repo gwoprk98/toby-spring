@@ -1,6 +1,5 @@
 package springbook.jdbctemplate.supporter;
 
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
@@ -10,13 +9,9 @@ import java.util.Map;
 import java.util.Properties;
 
 @Component
-public class SqlFinder implements InitializingBean {
+public class SqlFinder implements SqlService {
 
     private final Map<String, String> properties = new HashMap<>();
-
-    public String get(final String key) {
-        return properties.get(key);
-    }
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -33,5 +28,10 @@ public class SqlFinder implements InitializingBean {
             String value = properties.getProperty(key);
             this.properties.put(key, value);
         }
+    }
+
+    @Override
+    public String getSql(final String key) {
+        return this.properties.get(key);
     }
 }
